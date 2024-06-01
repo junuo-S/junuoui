@@ -10,7 +10,7 @@ set(button_sources
     button/buttons.cpp
 )
 
-junuo_add_library(${target_name} STATIC ${misc_sources} ${button_sources})
+junuo_add_library(${target_name} SHARED ${misc_sources} ${button_sources})
 junuo_use_Qt(${target_name} Core Widgets Gui)
 junuo_auto_moc(${target_name} ${button_sources})
 junuo_include_directories(${target_name} .)
