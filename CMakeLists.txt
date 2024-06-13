@@ -8,6 +8,8 @@ set(misc_sources
 set(button_sources
     button/buttons.h
     button/buttons.cpp
+    progressbar/junuowaterprogressbar.h
+    progressbar/junuowaterprogressbar.cpp
 )
 
 junuo_add_library(${target_name} SHARED ${misc_sources} ${button_sources})
