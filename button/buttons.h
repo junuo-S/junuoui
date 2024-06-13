@@ -27,7 +27,9 @@ public:
 	void setClickBgColor(const QColor& clickColor);
 	void setDisableBgColor(const QColor& disableColor);
 	void setTextColor(const QColor& textColor);
+	void setBorderColor(const QColor& borderColor);
 	void setBorderRadius(int borderRadius);
+	void setHasBorder(bool border);
 	void setLeftRightPadding(int leftRightPadding);
 	void setSpacing(int spacing);
 	void setIconPosition(IconPosition iconPosition);
@@ -36,7 +38,9 @@ public:
 	QColor getClickBgColor() const;
 	QColor getDisableBgColor() const;
 	QColor getTextColor() const;
+	QColor getBorderColor() const;
 	int getBorderRadius() const;
+	bool hasBorder() const;
 	int getLeftRightPadding() const;
 	int getSpacing() const;
 	IconPosition getIconPosition() const;
@@ -53,7 +57,9 @@ private:
 	QColor m_clickColor;
 	QColor m_disableColor;
 	QColor m_textColor;
+	QColor m_borderColor;
 	int m_borderRadius = 6;
+	bool m_hasBorder = false;
 	int m_leftRightPadding = 16;
 	int m_spacing = 6;
 	IconPosition m_iconPosition = LeftOfText;

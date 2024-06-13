@@ -70,9 +70,19 @@ void JunuoBaseButton::setTextColor(const QColor& textColor)
 	m_textColor = textColor;
 }
 
+void JunuoBaseButton::setBorderColor(const QColor& borderColor)
+{
+	m_borderColor = borderColor;
+}
+
 void JunuoBaseButton::setBorderRadius(int borderRadius)
 {
 	m_borderRadius = borderRadius;
+}
+
+void JunuoBaseButton::setHasBorder(bool border)
+{
+	m_hasBorder = border;
 }
 
 void JunuoBaseButton::setLeftRightPadding(int leftRightPadding)
@@ -115,9 +125,19 @@ QColor JunuoBaseButton::getTextColor() const
 	return m_textColor;
 }
 
+QColor JunuoBaseButton::getBorderColor() const
+{
+	return m_borderColor;
+}
+
 int JunuoBaseButton::getBorderRadius() const
 {
 	return m_borderRadius;
+}
+
+bool JunuoBaseButton::hasBorder() const
+{
+	return m_hasBorder;
 }
 
 int JunuoBaseButton::getLeftRightPadding() const
@@ -179,7 +199,7 @@ void JunuoBaseButton::drawBackground(QPainter& painter, const QRect& rect, QIcon
 		break;
 	}
 	qreal radius = DPI(m_borderRadius);
-	painter.setPen(Qt::NoPen);
+	painter.setPen(m_hasBorder && m_borderColor.isValid() ? QPen(m_borderColor) : Qt::NoPen);
 	painter.drawRoundedRect(rect, radius, radius);
 	painter.restore();
 }
