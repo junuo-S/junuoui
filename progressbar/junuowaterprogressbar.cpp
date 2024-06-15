@@ -162,7 +162,7 @@ void JunuoWaterProgressBar::drawWater(QPainter* painter)
 void JunuoWaterProgressBar::drawText(QPainter* painter)
 {
 	painter->save();
-	QString text = QString("%1%").arg(m_value / double(m_maxmumValue - m_minimumValue) * 100);
+	QString text = QString("%1%").arg(int(m_value / double(m_maxmumValue - m_minimumValue) * 100));
 	QFont font = painter->font();
 	font.setPixelSize(30);
 	painter->setFont(font);
