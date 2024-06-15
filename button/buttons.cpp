@@ -157,7 +157,7 @@ JunuoBaseButton::IconPosition JunuoBaseButton::getIconPosition() const
 
 void JunuoBaseButton::adjustBestSize()
 {
-	int textWidth = QFontMetrics(font()).width(text());
+	int textWidth = QFontMetrics(font()).horizontalAdvance(text());
 	bool hasIcon = !icon().isNull();
 	setFixedSize(DPI(m_leftRightPadding) * 2 + textWidth + (hasIcon ? DPI(6) + iconSize().width() : 0), DPI(40));
 }
@@ -213,7 +213,7 @@ void JunuoBaseButton::drawContent(QPainter& painter, const QRect& rect, QIcon::M
 	QFont font = this->font();
 	painter.setPen(QPen(m_textColor));
 	int leftRightPadding = DPI(m_leftRightPadding);
-	int textWidth = QFontMetrics(font).width(text);
+	int textWidth = QFontMetrics(font).horizontalAdvance(text);
 	int textHeight = QFontMetrics(font).height();
 	if (m_iconPosition == IconPosition::LeftOfText)
 	{

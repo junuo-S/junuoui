@@ -1,14 +1,14 @@
 ﻿#include "stdafx.h"
 
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 
 double dpiScaled(double value)
 {
 	static double px = []() -> double
 		{
-			auto d = qApp->desktop();
-			return d->logicalDpiX() / 96.0;
+			auto screen = qApp->primaryScreen();
+			return screen->logicalDotsPerInch() / 96.0;
 		}();
 	return px * value;
 }
