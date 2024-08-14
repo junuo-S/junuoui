@@ -10,6 +10,8 @@ set(button_sources
     button/buttons.cpp
     progressbar/junuowaterprogressbar.h
     progressbar/junuowaterprogressbar.cpp
+    customwidget/framelesswidget.h
+    customwidget/framelesswidget.cpp
 )
 
 junuo_add_library(${target_name} SHARED ${misc_sources} ${button_sources})
