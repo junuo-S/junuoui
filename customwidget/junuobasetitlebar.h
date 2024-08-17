@@ -35,6 +35,7 @@ protected:
 	virtual void onCloseButtonClicked();
 
 private:
+	bool isTargetWidgetHasFixedSize() const;
 	struct Data;
 	Data* data;
 };

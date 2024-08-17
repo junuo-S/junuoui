@@ -95,7 +95,7 @@ bool JunuoFrameLessWidget::eventFilter(QObject* obj, QEvent* event)
 
 void JunuoFrameLessWidget::doMainWidgetMouseEvent(QMouseEvent* event)
 {
-	if (!event)
+	if (!event || hasFixedSize())
 		return;
 	auto mousePos = event->pos();
 	const unsigned short cornersThreshold = DPI(6);
@@ -196,4 +196,9 @@ void JunuoFrameLessWidget::onTimeOut()
 	}
 	doResize(QCursor::pos() - m_lastPos);
 	m_lastPos = QCursor::pos();
+}
+
+bool JunuoFrameLessWidget::hasFixedSize() const
+{
+	return minimumSize() == maximumSize();
 }

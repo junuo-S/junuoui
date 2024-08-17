@@ -135,7 +135,7 @@ void JunuoBaseTitleBar::resizeEvent(QResizeEvent* event)
 			data->maxButton->setIcon(QIcon(":/icon_svg/maximum_reset.svg"));
 		else
 			data->maxButton->setIcon(QIcon(":/icon_svg/maximum.svg"));
-		if (data->targetWidget->minimumSize() == data->targetWidget->maximumSize())
+		if (isTargetWidgetHasFixedSize())
 			data->maxButton->hide();
 	}
 }
@@ -150,7 +150,7 @@ void JunuoBaseTitleBar::onMaxButtonClicked()
 {
 	if (!data->targetWidget)
 		return;
-	if (data->targetWidget->minimumSize() == data->targetWidget->maximumSize())
+	if (isTargetWidgetHasFixedSize())
 		return;
 	if (data->targetWidget->isMaximized())
 		data->targetWidget->showNormal();
@@ -162,5 +162,12 @@ void JunuoBaseTitleBar::onCloseButtonClicked()
 {
 	if (data->targetWidget)
 		data->targetWidget->close();
+}
+
+bool JunuoBaseTitleBar::isTargetWidgetHasFixedSize() const
+{
+	if (data->targetWidget && data->targetWidget->minimumSize() == data->targetWidget->maximumSize())
+		return true;
+	return false;
 }
 

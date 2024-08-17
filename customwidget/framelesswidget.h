@@ -37,6 +37,7 @@ private:
 	void doMainWidgetMouseEvent(QMouseEvent* event);
 	void doResize(QPoint delta);
 	void onTimeOut();
+	bool hasFixedSize() const;
 	bool m_moveable = true;
 	bool m_dragable = true;
 	size_t m_padding = 0;
