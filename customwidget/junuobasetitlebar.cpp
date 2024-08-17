@@ -89,7 +89,7 @@ void JunuoBaseTitleBar::setTitleIconSize(const QSize& size)
 
 void JunuoBaseTitleBar::mousePressEvent(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton && rect().adjusted(DPI(30), DPI(5), DPI(-30), 0).contains(event->pos()))
 	{
 		data->leftButtonDown = true;
 		data->lastPos = event->pos();
@@ -101,7 +101,6 @@ void JunuoBaseTitleBar::mouseReleaseEvent(QMouseEvent* event)
 	if (event->button() == Qt::LeftButton)
 	{
 		data->leftButtonDown = false;
-		data->lastPos = event->pos();
 	}
 }
 
