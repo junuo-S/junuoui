@@ -115,7 +115,7 @@ void JunuoBaseTitleBar::mouseMoveEvent(QMouseEvent* event)
 
 void JunuoBaseTitleBar::mouseDoubleClickEvent(QMouseEvent* event)
 {
-
+	onMaxButtonClicked();
 }
 
 void JunuoBaseTitleBar::showEvent(QShowEvent* event)
