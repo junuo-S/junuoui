@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/">
+    <file>icon_svg/app_logo_default.svg</file>
+    <file>icon_svg/close.svg</file>
+    <file>icon_svg/maximum.svg</file>
+    <file>icon_svg/maximum_reset.svg</file>
+    <file>icon_svg/minimum.svg</file>
+  </qresource>
+</RCC>

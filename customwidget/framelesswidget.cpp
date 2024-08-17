@@ -7,6 +7,8 @@
 #include <QVBoxLayout>
 #include <QPainterPath>
 
+#include "junuobasetitlebar.h"
+
 JunuoFrameLessWidget::JunuoFrameLessWidget(QWidget* parent /*= nullptr*/)
 	: QWidget(parent)
 	, m_padding(DPI(2))
@@ -55,6 +57,11 @@ void JunuoFrameLessWidget::setPadding(size_t padding)
 size_t JunuoFrameLessWidget::getPadding() const
 {
 	return m_padding;
+}
+
+void JunuoFrameLessWidget::setTitleBar(JunuoBaseTitleBar* titleBar)
+{
+	titleBar->setTargetWidget(this);
 }
 
 void JunuoFrameLessWidget::paintEvent(QPaintEvent* event)

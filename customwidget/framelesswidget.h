@@ -12,6 +12,8 @@
 
 #include <QWidget>
 
+class JunuoBaseTitleBar;
+
 class JUNUOUI_EXPORT JunuoFrameLessWidget : public QWidget
 {
 	Q_OBJECT
@@ -24,6 +26,7 @@ public:
 	bool getDragable() const;
 	void setPadding(size_t padding);
 	size_t getPadding() const;
+	void setTitleBar(JunuoBaseTitleBar* titleBar);
 
 protected:
 	void paintEvent(QPaintEvent* event) override;
