@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QPixmap>
+#include <QMouseEvent>
 
 struct JunuoBaseTitleBar::Data
 {
@@ -37,6 +38,7 @@ struct JunuoBaseTitleBar::Data
 		hLayout->addWidget(closeButton);
 	}
 
+	// 控件
 	JunuoBaseTitleBar* q = nullptr;
 	QLabel* logoLabel = nullptr;
 	QLabel* titleLabel = nullptr;
@@ -45,6 +47,10 @@ struct JunuoBaseTitleBar::Data
 	QPushButton* closeButton = nullptr;
 	QHBoxLayout* hLayout = nullptr;
 	QWidget* targetWidget = nullptr;
+
+	// 窗口状态
+	bool leftButtonDown = false;
+	QPoint lastPos;
 };
 
 JunuoBaseTitleBar::JunuoBaseTitleBar(QWidget* parent /*= nullptr*/)
@@ -80,17 +86,28 @@ void JunuoBaseTitleBar::setTitleIconSize(const QSize& size)
 
 void JunuoBaseTitleBar::mousePressEvent(QMouseEvent* event)
 {
-
+	if (event->button() == Qt::LeftButton)
+	{
+		data->leftButtonDown = true;
+		data->lastPos = event->pos();
+	}
 }
 
 void JunuoBaseTitleBar::mouseReleaseEvent(QMouseEvent* event)
 {
-
+	if (event->button() == Qt::LeftButton)
+	{
+		data->leftButtonDown = false;
+		data->lastPos = event->pos();
+	}
 }
 
 void JunuoBaseTitleBar::mouseMoveEvent(QMouseEvent* event)
 {
-
+	if (!data->targetWidget || !data->leftButtonDown)
+		return;
+	auto deltaPos = event->pos() - data->lastPos;
+	data->targetWidget->move(data->targetWidget->pos() + deltaPos);
 }
 
 void JunuoBaseTitleBar::mouseDoubleClickEvent(QMouseEvent* event)
