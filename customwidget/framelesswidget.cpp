@@ -15,13 +15,6 @@ JunuoFrameLessWidget::JunuoFrameLessWidget(QWidget* parent /*= nullptr*/)
 {
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 	this->setAttribute(Qt::WA_TranslucentBackground);
-	auto shadowEffect = new QGraphicsDropShadowEffect(this);
-	shadowEffect->setOffset(0, 0);
-	QColor shadowColor = QColor(0x757575);
-	shadowColor.setAlphaF(0.37);
-	shadowEffect->setColor(shadowColor);
-	shadowEffect->setBlurRadius(DPI(32));
-	this->setGraphicsEffect(shadowEffect);
 }
 
 JunuoFrameLessWidget::~JunuoFrameLessWidget()
@@ -66,5 +59,13 @@ void JunuoFrameLessWidget::setTitleBar(JunuoBaseTitleBar* titleBar)
 
 void JunuoFrameLessWidget::paintEvent(QPaintEvent* event)
 {
+	QPainter painter(this);
+	for (int i = 0; i <= DPI(10); i++)
+	{
+		QRect rect = this->rect().adjusted(i, i, -i, -i);
+		painter.setOpacity((float)i / DPI(10) / 13);
+		painter.drawRoundedRect(rect, DPI(10), DPI(10));
+	}
+	painter.end();
 	QWidget::paintEvent(event);
 }

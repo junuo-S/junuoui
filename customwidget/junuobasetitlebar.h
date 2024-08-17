@@ -29,6 +29,7 @@ protected:
 	void mouseDoubleClickEvent(QMouseEvent* event) override;
 	void showEvent(QShowEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
+	void resizeEvent(QResizeEvent* event) override;
 	virtual void onMinButtonClicked();
 	virtual void onMaxButtonClicked();
 	virtual void onCloseButtonClicked();

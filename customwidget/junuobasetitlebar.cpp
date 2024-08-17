@@ -27,12 +27,15 @@ struct JunuoBaseTitleBar::Data
 		hLayout->addWidget(titleLabel);
 		hLayout->addStretch();
 		minButton = new QPushButton(q);
+		JunuoBaseTitleBar::connect(minButton, &QPushButton::clicked, q, &JunuoBaseTitleBar::onMinButtonClicked);
 		minButton->setIcon(QIcon(":/icon_svg/minimum.svg"));
 		hLayout->addWidget(minButton);
 		maxButton = new QPushButton(q);
+		JunuoBaseTitleBar::connect(maxButton, &QPushButton::clicked, q, &JunuoBaseTitleBar::onMaxButtonClicked);
 		maxButton->setIcon(QIcon(":/icon_svg/maximum.svg"));
 		hLayout->addWidget(maxButton);
 		closeButton = new QPushButton(q);
+		JunuoBaseTitleBar::connect(closeButton, &QPushButton::clicked, q, &JunuoBaseTitleBar::onCloseButtonClicked);
 		closeButton->setObjectName("closeButton");
 		closeButton->setIcon(QIcon(":/icon_svg/close.svg"));
 		hLayout->addWidget(closeButton);
@@ -117,12 +120,6 @@ void JunuoBaseTitleBar::mouseDoubleClickEvent(QMouseEvent* event)
 
 void JunuoBaseTitleBar::showEvent(QShowEvent* event)
 {
-	if (data->targetWidget && data->targetWidget->isMaximized())
-		data->maxButton->setIcon(QIcon(":/icon_svg/maximum_reset.svg"));
-	else
-		data->maxButton->setIcon(QIcon(":/icon_svg/maximum.svg"));
-	if (data->targetWidget->minimumSize() == data->targetWidget->maximumSize())
-		data->maxButton->hide();
 	QWidget::showEvent(event);
 }
 
@@ -131,18 +128,38 @@ void JunuoBaseTitleBar::paintEvent(QPaintEvent* event)
 	QWidget::paintEvent(event);
 }
 
+void JunuoBaseTitleBar::resizeEvent(QResizeEvent* event)
+{
+	if (data->targetWidget)
+	{
+		if (data->targetWidget->isMaximized())
+			data->maxButton->setIcon(QIcon(":/icon_svg/maximum_reset.svg"));
+		else
+			data->maxButton->setIcon(QIcon(":/icon_svg/maximum.svg"));
+		if (data->targetWidget->minimumSize() == data->targetWidget->maximumSize())
+			data->maxButton->hide();
+	}
+}
+
 void JunuoBaseTitleBar::onMinButtonClicked()
 {
-
+	if (data->targetWidget)
+		data->targetWidget->showMinimized();
 }
 
 void JunuoBaseTitleBar::onMaxButtonClicked()
 {
-
+	if (!data->targetWidget)
+		return;
+	if (data->targetWidget->isMaximized())
+		data->targetWidget->showNormal();
+	else
+		data->targetWidget->showMaximized();
 }
 
 void JunuoBaseTitleBar::onCloseButtonClicked()
 {
-
+	if (data->targetWidget)
+		data->targetWidget->close();
 }
 
