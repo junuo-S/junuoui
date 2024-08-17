@@ -151,6 +151,8 @@ void JunuoBaseTitleBar::onMaxButtonClicked()
 {
 	if (!data->targetWidget)
 		return;
+	if (data->targetWidget->minimumSize() == data->targetWidget->maximumSize())
+		return;
 	if (data->targetWidget->isMaximized())
 		data->targetWidget->showNormal();
 	else
