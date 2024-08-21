@@ -11,6 +11,7 @@
 #endif // JUNUOUI_EXPORT
 
 #include <QWidget>
+#include <memory>
 
 class JUNUOUI_EXPORT JunuoBaseTitleBar : public QWidget
 {
@@ -37,5 +38,5 @@ protected:
 private:
 	bool isTargetWidgetHasFixedSize() const;
 	struct Data;
-	Data* data;
+	std::unique_ptr<Data> data;
 };
