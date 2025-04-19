@@ -1,11 +1,10 @@
-﻿set(target_name junuoui)
+﻿junuo_package(junuoui SHARED)
 
-set(misc_sources
+junuo_sources(
+    junuo_moc
     stdafx.h
     stdafx.cpp
-)
 
-set(sources
     button/buttons.h
     button/buttons.cpp
     progressbar/junuowaterprogressbar.h
@@ -14,23 +13,10 @@ set(sources
     customwidget/framelesswidget.cpp
     customwidget/junuobasetitlebar.h
     customwidget/junuobasetitlebar.cpp
-)
 
-set(qrc_files
     resources/resources.qrc
 )
 
-set(resources
-    resources/icon_svg/app_logo_default.svg
-    resources/icon_svg/close.svg
-    resources/icon_svg/maximum.svg
-    resources/icon_svg/maximum_reset.svg
-    resources/icon_svg/minimum.svg
-)
-
-junuo_add_library(${target_name} SHARED ${misc_sources} ${sources} ${qrc_files} ${resources})
-junuo_use_Qt(${target_name} Core Widgets Gui)
-junuo_auto_moc(${target_name} ${sources})
-junuo_auto_rcc(${target_name} ${qrc_files} ${resources})
-junuo_include_directories(${target_name} .)
-junuo_compile_definitions(${target_name} _JUNUOUI_MODULE_)
+junuo_use_packages(Qt6Core Qt6Widgets Qt6Gui)
+junuo_include_directories(.)
+junuo_compile_definitions(_JUNUOUI_MODULE_)
