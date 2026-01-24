@@ -9,8 +9,8 @@ junuo_sources(
     button/buttons.cpp
     progressbar/junuowaterprogressbar.h
     progressbar/junuowaterprogressbar.cpp
-    customwidget/framelesswidget.h
-    customwidget/framelesswidget.cpp
+    customwidget/junuoframelesswidget.h
+    customwidget/junuoframelesswidget.cpp
     customwidget/junuobasetitlebar.h
     customwidget/junuobasetitlebar.cpp
 
