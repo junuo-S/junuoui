@@ -1,6 +1,7 @@
-﻿#include "junuoWaterProgressBar.h"
+﻿#include "stdafx.h"
 
-#include <QtMath>
+#include "junuoWaterProgressBar.h"
+
 #include <QTimer>
 #include <QPainter>
 #include <QPainterPath>

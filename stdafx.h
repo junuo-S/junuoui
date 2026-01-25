@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <QWidget>
+
 double dpiScaled(double value);
 
 #define DPI(x) dpiScaled(x)

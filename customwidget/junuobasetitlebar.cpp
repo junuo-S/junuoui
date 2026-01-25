@@ -5,7 +5,6 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QHBoxLayout>
-#include <QPixmap>
 #include <QMouseEvent>
 
 struct JunuoBaseTitleBar::Data

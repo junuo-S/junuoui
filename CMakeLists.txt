@@ -13,6 +13,8 @@ junuo_sources(
     customwidget/junuoframelesswidget.cpp
     customwidget/junuobasetitlebar.h
     customwidget/junuobasetitlebar.cpp
+    customwidget/junuoloadingwidget.h
+    customwidget/junuoloadingwidget.cpp
 
     resources/resources.qrc
 )

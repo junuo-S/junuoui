@@ -2,10 +2,7 @@
 
 #include "junuoframelesswidget.h"
 
-#include <QGraphicsDropShadowEffect>
 #include <QPainter>
-#include <QVBoxLayout>
-#include <QPainterPath>
 #include <QMouseEvent>
 #include <QTimer>
 #include <QApplication>

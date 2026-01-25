@@ -10,9 +10,6 @@
 
 #endif // JUNUOUI_EXPORT
 
-#include <QWidget>
-#include <QColor>
-
 class QTimer;
 
 class JUNUOUI_EXPORT JunuoWaterProgressBar : public QWidget

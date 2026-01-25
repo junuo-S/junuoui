@@ -10,7 +10,6 @@
 
 #endif // JUNUOUI_EXPORT
 
-#include <QWidget>
 #include <memory>
 
 class JUNUOUI_EXPORT JunuoBaseTitleBar : public QWidget
