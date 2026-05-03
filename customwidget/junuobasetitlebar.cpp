@@ -10,68 +10,16 @@
 #include <QStyleOption>
 #include <QPainter>
 
-struct JunuoBaseTitleBar::Data
-{
-	void initUI(const QPixmap& logo, const QString& title)
-	{
-		q->setAttribute(Qt::WA_TranslucentBackground, true);
-		hLayout = new QHBoxLayout(q);
-		hLayout->setContentsMargins(DPI(8), 0, DPI(8), 0);
-		q->setFixedHeight(DPI(32));
-		logoLabel = new QLabel(q);
-		logoLabel->setFixedSize(DPI_SIZE(24, 24));
-		logoLabel->setScaledContents(true);
-		logoLabel->setPixmap(logo);
-		hLayout->addWidget(logoLabel);
-		titleLabel = new QLabel(q);
-		titleLabel->setText(title);
-		titleLabel->setObjectName("titleLabel");
-		hLayout->addWidget(titleLabel);
-		hLayout->addStretch();
-		minButton = new QPushButton(q);
-		JunuoBaseTitleBar::connect(minButton, &QPushButton::clicked, q, &JunuoBaseTitleBar::onMinButtonClicked);
-		minButton->setIcon(QIcon(":/icon_svg/minimum.svg"));
-		hLayout->addWidget(minButton);
-		maxButton = new QPushButton(q);
-		JunuoBaseTitleBar::connect(maxButton, &QPushButton::clicked, q, &JunuoBaseTitleBar::onMaxButtonClicked);
-		maxButton->setIcon(QIcon(":/icon_svg/maximum.svg"));
-		hLayout->addWidget(maxButton);
-		closeButton = new QPushButton(q);
-		JunuoBaseTitleBar::connect(closeButton, &QPushButton::clicked, q, &JunuoBaseTitleBar::onCloseButtonClicked);
-		closeButton->setObjectName("closeButton");
-		closeButton->setIcon(QIcon(":/icon_svg/close.svg"));
-		hLayout->addWidget(closeButton);
-	}
-
-	// 控件
-	JunuoBaseTitleBar* q = nullptr;
-	QLabel* logoLabel = nullptr;
-	QLabel* titleLabel = nullptr;
-	QPushButton* minButton = nullptr;
-	QPushButton* maxButton = nullptr;
-	QPushButton* closeButton = nullptr;
-	QHBoxLayout* hLayout = nullptr;
-	QWidget* targetWidget = nullptr;
-
-	// 窗口状态
-	bool leftButtonDown = false;
-	QPoint lastPos;
-};
-
 JunuoBaseTitleBar::JunuoBaseTitleBar(QWidget* parent /*= nullptr*/)
 	: QWidget(parent)
-	, data(new Data)
 {
-	data->q = this;
-	data->initUI(QPixmap(":/icon_svg/app_logo_default.svg"), "This is title");
+	initUi(QPixmap(":/icon_svg/app_logo_default.svg"), "This is title");
 }
 
 JunuoBaseTitleBar::JunuoBaseTitleBar(const QPixmap& logo, const QString& title, QWidget* parent /*= nullptr*/)
 	: QWidget(parent)
-	, data(new Data)
 {
-	data->q = this;
-	data->initUI(logo, title);
+	initUi(logo, title);
 }
 
 JunuoBaseTitleBar::~JunuoBaseTitleBar()
@@ -81,20 +29,20 @@ JunuoBaseTitleBar::~JunuoBaseTitleBar()
 
 void JunuoBaseTitleBar::setTargetWidget(QWidget* target)
 {
-	data->targetWidget = target;
+	m_targetWidget = target;
 }
 
 void JunuoBaseTitleBar::setTitleIconSize(const QSize& size)
 {
-	data->logoLabel->setFixedSize(size);
+	m_logoLabel->setFixedSize(size);
 }
 
 void JunuoBaseTitleBar::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton && rect().adjusted(DPI(30), DPI(5), DPI(-30), 0).contains(event->pos()))
 	{
-		data->leftButtonDown = true;
-		data->lastPos = event->pos();
+		m_leftButtonDown = true;
+		m_lastPos = event->pos();
 	}
 }
 
@@ -102,16 +50,16 @@ void JunuoBaseTitleBar::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		data->leftButtonDown = false;
+		m_leftButtonDown = false;
 	}
 }
 
 void JunuoBaseTitleBar::mouseMoveEvent(QMouseEvent* event)
 {
-	if (!data->targetWidget || !data->leftButtonDown)
+	if (!m_targetWidget || !m_leftButtonDown)
 		return;
-	auto deltaPos = event->pos() - data->lastPos;
-	data->targetWidget->move(data->targetWidget->pos() + deltaPos);
+	auto deltaPos = event->pos() - m_lastPos;
+	m_targetWidget->move(m_targetWidget->pos() + deltaPos);
 }
 
 void JunuoBaseTitleBar::mouseDoubleClickEvent(QMouseEvent* event)
@@ -135,45 +83,81 @@ void JunuoBaseTitleBar::paintEvent(QPaintEvent* event)
 
 void JunuoBaseTitleBar::resizeEvent(QResizeEvent* event)
 {
-	if (data->targetWidget)
+	if (m_targetWidget)
 	{
-		if (data->targetWidget->isMaximized())
-			data->maxButton->setIcon(QIcon(":/icon_svg/maximum_reset.svg"));
+		if (m_targetWidget->isMaximized())
+			m_maxButton->setIcon(QIcon(":/icon_svg/maximum_reset.svg"));
 		else
-			data->maxButton->setIcon(QIcon(":/icon_svg/maximum.svg"));
+			m_maxButton->setIcon(QIcon(":/icon_svg/maximum.svg"));
 		if (isTargetWidgetHasFixedSize())
-			data->maxButton->hide();
+			m_maxButton->hide();
 	}
 }
 
 void JunuoBaseTitleBar::onMinButtonClicked()
 {
-	if (data->targetWidget)
-		data->targetWidget->showMinimized();
+	if (m_targetWidget)
+		m_targetWidget->showMinimized();
 }
 
 void JunuoBaseTitleBar::onMaxButtonClicked()
 {
-	if (!data->targetWidget)
+	if (!m_targetWidget)
 		return;
 	if (isTargetWidgetHasFixedSize())
 		return;
-	if (data->targetWidget->isMaximized())
-		data->targetWidget->showNormal();
+	if (m_targetWidget->isMaximized())
+		m_targetWidget->showNormal();
 	else
-		data->targetWidget->showMaximized();
+		m_targetWidget->showMaximized();
 }
 
 void JunuoBaseTitleBar::onCloseButtonClicked()
 {
-	if (data->targetWidget)
-		data->targetWidget->close();
+	if (m_targetWidget)
+		m_targetWidget->close();
 }
 
 bool JunuoBaseTitleBar::isTargetWidgetHasFixedSize() const
 {
-	if (data->targetWidget && data->targetWidget->minimumSize() == data->targetWidget->maximumSize())
+	if (m_targetWidget && m_targetWidget->minimumSize() == m_targetWidget->maximumSize())
 		return true;
 	return false;
+}
+
+void JunuoBaseTitleBar::initUi(const QPixmap& logo, const QString& title)
+{
+	setAttribute(Qt::WA_TranslucentBackground, true);
+	m_hLayout = new QHBoxLayout(this);
+	m_hLayout->setContentsMargins(DPI(8), 0, DPI(8), 0);
+	setFixedHeight(DPI(32));
+
+	m_logoLabel = new QLabel(this);
+	m_logoLabel->setFixedSize(DPI_SIZE(24, 24));
+	m_logoLabel->setScaledContents(true);
+	m_logoLabel->setPixmap(logo);
+	m_hLayout->addWidget(m_logoLabel);
+
+	m_titleLabel = new QLabel(this);
+	m_titleLabel->setText(title);
+	m_titleLabel->setObjectName("titleLabel");
+	m_hLayout->addWidget(m_titleLabel);
+	m_hLayout->addStretch();
+
+	m_minButton = new QPushButton(this);
+	connect(m_minButton, &QPushButton::clicked, this, &JunuoBaseTitleBar::onMinButtonClicked);
+	m_minButton->setIcon(QIcon(":/icon_svg/minimum.svg"));
+	m_hLayout->addWidget(m_minButton);
+
+	m_maxButton = new QPushButton(this);
+	connect(m_maxButton, &QPushButton::clicked, this, &JunuoBaseTitleBar::onMaxButtonClicked);
+	m_maxButton->setIcon(QIcon(":/icon_svg/maximum.svg"));
+	m_hLayout->addWidget(m_maxButton);
+
+	m_closeButton = new QPushButton(this);
+	connect(m_closeButton, &QPushButton::clicked, this, &JunuoBaseTitleBar::onCloseButtonClicked);
+	m_closeButton->setObjectName("closeButton");
+	m_closeButton->setIcon(QIcon(":/icon_svg/close.svg"));
+	m_hLayout->addWidget(m_closeButton);
 }
 

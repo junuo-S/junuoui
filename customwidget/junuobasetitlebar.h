@@ -10,7 +10,19 @@
 
 #endif // JUNUOUI_EXPORT
 
-#include <memory>
+#include <QPoint>
+
+class QLabel;
+class QPushButton;
+class QHBoxLayout;
+class QWidget;
+class QPixmap;
+class QString;
+class QSize;
+class QMouseEvent;
+class QShowEvent;
+class QPaintEvent;
+class QResizeEvent;
 
 class JUNUOUI_EXPORT JunuoBaseTitleBar : public QWidget
 {
@@ -35,7 +47,17 @@ protected:
 	virtual void onCloseButtonClicked();
 
 private:
+	void initUi(const QPixmap& logo, const QString& title);
 	bool isTargetWidgetHasFixedSize() const;
-	struct Data;
-	std::unique_ptr<Data> data;
+
+	QLabel *m_logoLabel = nullptr;
+	QLabel *m_titleLabel = nullptr;
+	QPushButton *m_minButton = nullptr;
+	QPushButton *m_maxButton = nullptr;
+	QPushButton *m_closeButton = nullptr;
+	QHBoxLayout *m_hLayout = nullptr;
+	QWidget *m_targetWidget = nullptr;
+
+	bool m_leftButtonDown = false;
+	QPoint m_lastPos;
 };
