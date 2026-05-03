@@ -6,6 +6,9 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QMouseEvent>
+#include <QStyle>
+#include <QStyleOption>
+#include <QPainter>
 
 struct JunuoBaseTitleBar::Data
 {
@@ -123,7 +126,11 @@ void JunuoBaseTitleBar::showEvent(QShowEvent* event)
 
 void JunuoBaseTitleBar::paintEvent(QPaintEvent* event)
 {
-	QWidget::paintEvent(event);
+	Q_UNUSED(event);
+	QStyleOption opt;
+	opt.initFrom(this);
+	QPainter painter(this);
+	style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 }
 
 void JunuoBaseTitleBar::resizeEvent(QResizeEvent* event)
