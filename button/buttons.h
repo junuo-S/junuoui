@@ -16,7 +16,7 @@ class JUNUOUI_EXPORT JunuoBaseButton : public QPushButton
 {
 	Q_OBJECT
 public:
-	enum IconPosition { LeftOfText, RightOfText };
+	enum class IconPosition : short { LeftOfText, RightOfText };
 
 	JunuoBaseButton(const QIcon& icon, const QString& text, QWidget* parent = nullptr);
 	JunuoBaseButton(const QString& text, QWidget* parent = nullptr);
@@ -62,5 +62,5 @@ private:
 	bool m_hasBorder = false;
 	int m_leftRightPadding = 16;
 	int m_spacing = 6;
-	IconPosition m_iconPosition = LeftOfText;
+	IconPosition m_iconPosition = IconPosition::LeftOfText;
 };
